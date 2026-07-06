@@ -1,9 +1,11 @@
 import pandas as pd
 from config import API_KEY, SEARCH_URL, VIDEOS_URL, TIMEOUT, MAX_SINGLE_QUERY
+from utils.logger import log
 
 def save_and_show(results, keyword):
     """第2步：打印 TOP5 + 全部存 CSV。"""
     if not results:
+        log.info("无数据可导出CSV")
         return
 
     # DataFrame = Pandas 的核心数据结构，一张有行有列的二维表
@@ -27,5 +29,10 @@ def save_and_show(results, keyword):
     # ── 全部数据存 CSV ──
     csv_name = f"youtube_{keyword}.csv"
     # index=False 不写行号；utf-8-sig 让 Excel 打开不乱码
-    df.to_csv(csv_name, index=False, encoding="utf-8-sig")
-    print(f"\n 全部 {len(df)} 条已保存到: {csv_name}")
+    try:
+        df.to_csv(csv_name, encoding="utf-8-sig", index=False)
+        log.info(f"数据已保存至文件：{csv_name}")
+    except PermissionError:
+        log.error("文件写入失败：无文件读写权限，请关闭占用CSV的软件")
+    except Exception as e:
+        log.error(f"导出CSV异常：{str(e)}")

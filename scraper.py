@@ -10,7 +10,7 @@ import requests   # 发送 HTTP 请求的库（给 API 服务器打电话）
 import pandas as pd  # 数据表操作库（Excel 能干的它都能干）
 
 # ── 配置 ──
-API_KEY = "AIzaSyDtoLfzlE2uRT6R6Nrx6_lloYd2Rsi3kxw"
+API_KEY = ""
 # API_KEY = 你的"门禁卡"，YouTube 验证后才会返回数据
 
 # YouTube Data API 的请求地址
